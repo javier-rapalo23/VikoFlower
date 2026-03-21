@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Flores Amarillas para Ti</title>
+	<style>
+		:root {
+			--bg-1: #fff8f0;
+			--bg-2: #ffeec9;
+			--bg-3: #ffd56b;
+			--text-main: #5a3c22;
+			--text-soft: #875c38;
+			--accent: #f6b800;
+			--accent-strong: #e59a00;
+			--card: #fffdf8;
+			--white: #fff;
+			--shadow: 0 12px 30px rgba(180, 116, 0, 0.18);
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			min-height: 100vh;
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			color: var(--text-main);
+			background:
+				radial-gradient(circle at 15% 15%, #fffdf7 0%, transparent 40%),
+				radial-gradient(circle at 85% 20%, #fff2cb 0%, transparent 35%),
+				linear-gradient(150deg, var(--bg-1), var(--bg-2));
+			overflow-x: hidden;
+			position: relative;
+		}
+
+		.bunting {
+			width: 100%;
+			padding: 1rem 0.8rem 0;
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 0.6rem;
+			position: relative;
+			z-index: 3;
+		}
+
+		.flag {
+			background: var(--white);
+			color: var(--text-soft);
+			padding: 0.65rem 0.85rem;
+			border-radius: 0.5rem 0.5rem 0.15rem 0.15rem;
+			font-size: 0.86rem;
+			font-weight: 600;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+			position: relative;
+			animation: sway 4s ease-in-out infinite;
+		}
+
+		.flag:nth-child(even) {
+			animation-delay: 0.45s;
+		}
+
+		.flag::after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: -0.55rem;
+			border-left: 0.35rem solid transparent;
+			border-right: 0.35rem solid transparent;
+			border-top: 0.55rem solid var(--white);
+		}
+
+		main {
+			max-width: 960px;
+			margin: 1.4rem auto 3rem;
+			padding: 0 1rem;
+			position: relative;
+			z-index: 2;
+			display: grid;
+			gap: 1rem;
+		}
+
+		.hero {
+			background: rgba(255, 255, 255, 0.72);
+			backdrop-filter: blur(2px);
+			border: 1px solid rgba(255, 255, 255, 0.7);
+			border-radius: 1.4rem;
+			padding: clamp(1.4rem, 3vw, 2.2rem);
+			text-align: center;
+			box-shadow: var(--shadow);
+			position: relative;
+			overflow: hidden;
+		}
+
+		h1 {
+			font-size: clamp(1.7rem, 5vw, 3rem);
+			color: #7b4f00;
+			margin-bottom: 0.75rem;
+			letter-spacing: 0.4px;
+		}
+
+		.subtitle {
+			font-size: clamp(1rem, 2.6vw, 1.25rem);
+			color: var(--text-soft);
+			max-width: 680px;
+			margin: 0 auto 1.35rem;
+			line-height: 1.5;
+		}
+
+		.flower-row {
+			display: flex;
+			justify-content: center;
+			gap: clamp(0.9rem, 3vw, 1.6rem);
+			margin: 0.9rem 0 1.5rem;
+			flex-wrap: wrap;
+		}
+
+		.flower {
+			width: 62px;
+			height: 62px;
+			position: relative;
+			animation: pulse 3.2s ease-in-out infinite;
+		}
+
+		.flower:nth-child(2) {
+			animation-delay: 0.5s;
+		}
+
+		.flower:nth-child(3) {
+			animation-delay: 1s;
+		}
+
+		.petal {
+			position: absolute;
+			width: 28px;
+			height: 28px;
+			border-radius: 50%;
+			background: radial-gradient(circle at 30% 30%, #ffe989, var(--accent));
+			top: 50%;
+			left: 50%;
+			transform-origin: center;
+		}
+
+		.petal:nth-child(1) { transform: translate(-50%, -95%); }
+		.petal:nth-child(2) { transform: translate(-5%, -50%); }
+		.petal:nth-child(3) { transform: translate(-50%, -5%); }
+		.petal:nth-child(4) { transform: translate(-95%, -50%); }
+		.center {
+			position: absolute;
+			width: 22px;
+			height: 22px;
+			background: #6f4a18;
+			border-radius: 50%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			box-shadow: inset 0 0 0 2px rgba(255, 221, 126, 0.45);
+		}
+
+		.message-box {
+			margin: 0.8rem auto 1rem;
+			padding: 0.95rem 1rem;
+			max-width: 560px;
+			border-radius: 0.9rem;
+			background: #fffaf0;
+			border: 1px dashed rgba(195, 129, 0, 0.35);
+			color: #7a5324;
+			min-height: 62px;
+			display: grid;
+			place-items: center;
+			text-align: center;
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.story {
+			background: rgba(255, 255, 255, 0.72);
+			border: 1px solid rgba(255, 255, 255, 0.7);
+			border-radius: 1.2rem;
+			padding: 1rem;
+			box-shadow: var(--shadow);
+			display: grid;
+			gap: 0.9rem;
+			width: min(100%, 980px);
+			margin-inline: auto;
+		}
+
+		.story-header {
+			font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+			color: #7b4f00;
+			text-align: center;
+		}
+
+		.story-grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 0.8rem;
+		}
+
+		.story-section {
+			background: var(--card);
+			border: 1px solid rgba(214, 161, 56, 0.34);
+			border-radius: 0.9rem;
+			padding: 0.8rem;
+			min-height: clamp(520px, 72vh, 900px);
+			display: grid;
+			grid-template-rows: auto 1fr;
+		}
+
+		.story-section h3 {
+			font-size: 1rem;
+			margin-bottom: 0.65rem;
+			color: #83571f;
+		}
+
+		.chat-cards {
+			display: grid;
+			gap: 0.7rem;
+			height: clamp(460px, 68vh, 860px);
+			overflow-y: auto;
+			padding: 0.15rem 0.35rem 0.15rem 0.15rem;
+			scrollbar-gutter: stable;
+		}
+
+		.chat-card {
+			background: #fff8e8;
+			border: 1px solid rgba(214, 161, 56, 0.25);
+			border-radius: 0.65rem;
+			padding: 0.55rem;
+			display: grid;
+			gap: 0.45rem;
+			width: 100%;
+			overflow: visible;
+		}
+
+		.msg-row {
+			display: flex;
+			width: 100%;
+		}
+
+		.msg-row.mine {
+			justify-content: flex-end;
+		}
+
+		.msg-row.theirs {
+			justify-content: flex-start;
+		}
+
+		.msg-content {
+			display: flex;
+			flex-direction: column;
+			gap: 0.2rem;
+			max-width: min(92%, 560px);
+		}
+
+		.msg-row.mine .msg-content {
+			align-items: flex-end;
+		}
+
+		.msg-row.theirs .msg-content {
+			align-items: flex-start;
+		}
+
+		.msg-name {
+			font-size: 0.72rem;
+			color: #8c6335;
+			font-weight: 600;
+		}
+
+		.msg-bubble {
+			display: inline-block;
+			max-width: 100%;
+			min-height: 34px;
+			font-size: 0.88rem;
+			padding: 0.45rem 0.62rem;
+			border-radius: 0.8rem;
+			line-height: 1.38;
+			color: #5f3f1a;
+			word-break: break-word;
+			white-space: pre-wrap;
+		}
+
+		.msg-row.mine .msg-bubble {
+			background: #f9dd8a;
+			border-bottom-right-radius: 0.25rem;
+		}
+
+		.msg-row.theirs .msg-bubble {
+			background: #fff;
+			border: 1px solid rgba(214, 161, 56, 0.22);
+			border-bottom-left-radius: 0.25rem;
+		}
+
+		.empty-state {
+			background: #fff8e8;
+			border-radius: 0.65rem;
+			padding: 0.5rem 0.56rem;
+			font-size: 0.88rem;
+			color: #714a1f;
+			border-left: 3px solid #f0bc3e;
+			opacity: 0.75;
+			font-style: italic;
+		}
+
+		.message-box.pop {
+			transform: scale(1.02);
+			box-shadow: 0 8px 18px rgba(167, 109, 0, 0.18);
+		}
+
+		.love-btn {
+			border: none;
+			background: linear-gradient(140deg, var(--bg-3), var(--accent-strong));
+			color: #fff;
+			font-size: 1rem;
+			font-weight: 700;
+			padding: 0.8rem 1.3rem;
+			border-radius: 999px;
+			cursor: pointer;
+			box-shadow: 0 10px 18px rgba(186, 124, 0, 0.25);
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.love-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 14px 22px rgba(186, 124, 0, 0.3);
+		}
+
+		.love-btn:active {
+			transform: translateY(0);
+		}
+
+		.decorative-flower {
+			position: absolute;
+			width: clamp(60px, 11vw, 95px);
+			height: clamp(60px, 11vw, 95px);
+			opacity: 0.7;
+			z-index: 1;
+		}
+
+		.decorative-flower::before,
+		.decorative-flower::after {
+			content: "✿";
+			position: absolute;
+			color: rgba(241, 184, 0, 0.82);
+			font-size: clamp(2.2rem, 6vw, 3.3rem);
+			line-height: 1;
+			animation: float 5.8s ease-in-out infinite;
+		}
+
+		.decorative-flower.left {
+			left: -10px;
+			bottom: 12vh;
+		}
+
+		.decorative-flower.right {
+			right: 6px;
+			top: 16vh;
+		}
+
+		.decorative-flower.right::before {
+			animation-delay: 1.1s;
+		}
+
+		.fall-layer {
+			position: fixed;
+			inset: 0;
+			pointer-events: none;
+			overflow: hidden;
+			z-index: 1;
+		}
+
+		.falling-flower {
+			position: absolute;
+			top: -10%;
+			font-size: clamp(0.95rem, 2.1vw, 1.25rem);
+			color: rgba(240, 178, 0, 0.62);
+			animation: drop linear forwards;
+		}
+
+		@keyframes drop {
+			0% {
+				transform: translate3d(0, -10vh, 0) rotate(0deg);
+				opacity: 0;
+			}
+			10% {
+				opacity: 0.85;
+			}
+			100% {
+				transform: translate3d(20px, 115vh, 0) rotate(300deg);
+				opacity: 0;
+			}
+		}
+
+		@keyframes sway {
+			0%, 100% { transform: rotate(-1deg); }
+			50% { transform: rotate(1.8deg); }
+		}
+
+		@keyframes pulse {
+			0%, 100% { transform: scale(1); }
+			50% { transform: scale(1.06); }
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-8px); }
+		}
+
+		@media (max-width: 640px) {
+			.bunting {
+				gap: 0.45rem;
+			}
+
+			.flag {
+				font-size: 0.76rem;
+				padding: 0.55rem 0.7rem;
+			}
+
+			main {
+				margin-top: 1rem;
+			}
+
+			.hero {
+				border-radius: 1.1rem;
+			}
+
+			.message-box {
+				font-size: 0.95rem;
+			}
+
+			.story-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.story {
+				padding: 0.75rem;
+			}
+
+			.story-section {
+				padding: 0.62rem;
+				min-height: clamp(460px, 74vh, 820px);
+			}
+
+			.chat-cards {
+				height: clamp(420px, 68vh, 760px);
+				padding-right: 0.2rem;
+			}
+
+			.msg-bubble {
+				max-width: 100%;
+				font-size: 0.85rem;
+			}
+
+			.msg-content {
+				max-width: 94%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="fall-layer" id="fallLayer" aria-hidden="true"></div>
+	<div class="decorative-flower left" aria-hidden="true"></div>
+	<div class="decorative-flower right" aria-hidden="true"></div>
+
+	<header class="bunting" aria-label="Banderines románticos">
+		<div class="flag">Eres mi luz ✨</div>
+		<div class="flag">Te elijo siempre 💛</div>
+		<div class="flag">Mi lugar favorito: contigo 🌼</div>
+		<div class="flag">Amor bonito 🌙</div>
+		<div class="flag">Cada día más tú y yo 💌</div>
+	</header>
+
+	<main>
+		<section class="hero">
+			<h1>Flores Amarillas para Ti</h1>
+			<p class="subtitle">
+				Un rincón suave y lleno de cariño para recordarte que en cada pétalo,
+				late una razón más para sonreír a tu lado.
+			</p>
+
+			<div class="flower-row" aria-hidden="true">
+				<div class="flower">
+					<span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+					<span class="center"></span>
+				</div>
+				<div class="flower">
+					<span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+					<span class="center"></span>
+				</div>
+				<div class="flower">
+					<span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+					<span class="center"></span>
+				</div>
+			</div>
+
+			<div class="message-box" id="messageBox">Presiona el botón para recibir un mensajito amoroso 🌻</div>
+			<button class="love-btn" id="loveBtn" type="button">Mostrar sorpresa</button>
+		</section>
+
+		<section class="story" id="storySection">
+			<h2 class="story-header">Nuestra historia</h2>
+			<div class="story-grid">
+				<article class="story-section">
+					<h3>Conversaciones cortas (estilo WhatsApp)</h3>
+					<div class="chat-cards" id="chatCards"></div>
+				</article>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		const mensajes = [
+			"Tu sonrisa ilumina hasta los días nublados.",
+			"Eres mi casualidad favorita y mi destino más bonito.",
+			"Si te pienso, florece todo alrededor.",
+			"Contigo, cualquier lugar se siente hogar.",
+			"Gracias por existir y hacerme creer en lo hermoso."
+		];
+
+		const messageBox = document.getElementById("messageBox");
+		const loveBtn = document.getElementById("loveBtn");
+		const fallLayer = document.getElementById("fallLayer");
+		const chatCards = document.getElementById("chatCards");
+		const bunting = document.querySelector(".bunting");
+		const CHAT_FILE = "Chat de WhatsApp con Victoria Ramirez.txt";
+		const MI_NOMBRE = "Javier Orellana";
+		const ELLA_NOMBRE = "Victoria Ramirez";
+		const FECHA_INICIO = new Date(2024, 1, 1, 0, 0, 0, 0);
+		const FECHA_FIN = new Date(2026, 0, 28, 23, 59, 59, 999);
+		let indice = 0;
+		const frasesBanderin = [
+			"Eres mi luz ✨",
+			"Te elijo siempre 💛",
+			"Mi lugar favorito: contigo 🌼",
+			"Amor bonito 🌙",
+			"Cada día más tú y yo 💌"
+		];
+
+		function crearFlorCayendo(extraBrillo = false) {
+			const flor = document.createElement("span");
+			flor.className = "falling-flower";
+			flor.textContent = extraBrillo ? "🌼" : "✿";
+			flor.style.left = `${Math.random() * 100}%`;
+			flor.style.animationDuration = `${6 + Math.random() * 5}s`;
+			flor.style.animationDelay = `${Math.random() * 0.6}s`;
+
+			if (extraBrillo) {
+				flor.style.filter = "drop-shadow(0 0 6px rgba(255, 210, 77, .75))";
+			}
+
+			fallLayer.appendChild(flor);
+			setTimeout(() => flor.remove(), 12000);
+		}
+
+		function lluviaConstante() {
+			crearFlorCayendo(false);
+			const intervalo = 700 + Math.random() * 650;
+			setTimeout(lluviaConstante, intervalo);
+		}
+
+		function estallidoRomantico() {
+			for (let i = 0; i < 12; i++) {
+				crearFlorCayendo(true);
+			}
+		}
+
+		function limpiarLinea(texto) {
+			return texto
+				.replace(/<Multimedia omitido>/gi, "")
+				.replace(/<Se editó este mensaje\.?\s*>/gi, "")
+				.replace(/‎/g, "")
+				.trim();
+		}
+
+		function esMensajeValido(texto) {
+			if (!texto) return false;
+			return true;
+		}
+
+		function normalizarAutor(autor) {
+			return autor
+				.replace(/‎/g, "")
+				.replace(/\s+/g, " ")
+				.toLowerCase()
+				.trim();
+		}
+
+		function extraerFecha(linea) {
+			const match = linea.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+			if (!match) return null;
+			const dia = Number(match[1]);
+			const mes = Number(match[2]) - 1;
+			const anio = Number(match[3]);
+			const fecha = new Date(anio, mes, dia);
+			return Number.isNaN(fecha.getTime()) ? null : fecha;
+		}
+
+		function estaEnRango(fecha) {
+			if (!fecha) return false;
+			return fecha >= FECHA_INICIO && fecha <= FECHA_FIN;
+		}
+
+		function extraerMensajes(texto, miNombre, nombreElla) {
+			const lineas = texto.split("\n");
+			const mios = [];
+			const deElla = [];
+			const timeline = [];
+			const miNombreNorm = normalizarAutor(miNombre);
+			const ellaNombreNorm = normalizarAutor(nombreElla);
+
+			lineas.forEach((linea) => {
+				const limpia = linea.trim();
+				if (!limpia.includes(" - ")) return;
+				const fecha = extraerFecha(limpia);
+				if (!estaEnRango(fecha)) return;
+
+				const partes = limpia.split(" - ");
+				if (partes.length < 2) return;
+				const contenido = partes.slice(1).join(" - ");
+
+				const separador = contenido.indexOf(":");
+				if (separador === -1) return;
+
+				const autor = normalizarAutor(contenido.slice(0, separador));
+				const mensajeRaw = contenido.slice(separador + 1).trim();
+				const mensaje = limpiarLinea(mensajeRaw);
+
+				if (!esMensajeValido(mensaje)) return;
+
+				if (autor === miNombreNorm) {
+					mios.push(mensaje);
+					timeline.push({ autor: miNombre, role: "mine", mensaje, fecha });
+				} else if (autor === ellaNombreNorm) {
+					deElla.push(mensaje);
+					timeline.push({ autor: nombreElla, role: "theirs", mensaje, fecha });
+				}
+			});
+
+			return { mios, deElla, timeline };
+		}
+
+		function puntuarMomento(frase) {
+			const texto = frase.toLowerCase();
+			let score = 0;
+
+			if (/[❤️😍]/u.test(frase)) score += 3;
+			if (/tkm|te quiero|te amo|guapa|princesa/.test(texto)) score += 3;
+			if (frase.length > 20) score += 1;
+
+			return score;
+		}
+
+		function detectarMomentos(mios, deElla) {
+			const combinados = [...mios, ...deElla];
+			const unicos = [...new Set(combinados)];
+			const conPuntaje = unicos
+				.map((frase) => ({ frase, score: puntuarMomento(frase) }))
+				.filter((item) => item.score >= 3)
+				.sort((a, b) => b.score - a.score)
+				.slice(0, 14);
+
+			return conPuntaje.map((item) => item.frase);
+		}
+
+		function construirConversacionesCortas(timeline) {
+			const conversaciones = [];
+			for (let i = 0; i < timeline.length; i++) {
+				const actual = timeline[i];
+				if (actual.role !== "mine" && actual.role !== "theirs") continue;
+				const rolOpuesto = actual.role === "mine" ? "theirs" : "mine";
+
+				let respuesta = null;
+				for (let j = i + 1; j < Math.min(i + 8, timeline.length); j++) {
+					if (timeline[j].role === rolOpuesto) {
+						respuesta = timeline[j];
+						i = j;
+						break;
+					}
+				}
+
+				if (respuesta) {
+					conversaciones.push([actual, respuesta]);
+				}
+			}
+			return conversaciones;
+		}
+
+		function esMensajeCarinoso(texto) {
+			const mensaje = texto.toLowerCase();
+			const tieneEmoji = /[❤️💕🥰😍😘]/u.test(texto);
+			const tienePalabras = /te amo|te quiero|tkm|mi vida|mi amor|guapa|bonita|hermosa|te ves linda|me gustas/.test(mensaje);
+			return tieneEmoji || tienePalabras;
+		}
+
+		function filtrarConversacionesCarinosas(conversaciones) {
+			return conversaciones.filter((bloque) => {
+				const javier = bloque.find((item) => item.role === "mine");
+				const victoria = bloque.find((item) => item.role === "theirs");
+				if (!javier || !victoria) return false;
+				return esMensajeCarinoso(javier.mensaje) || esMensajeCarinoso(victoria.mensaje);
+			});
+		}
+
+		function pintarConversaciones(conversaciones) {
+			chatCards.innerHTML = "";
+			if (!conversaciones.length) {
+				const empty = document.createElement("div");
+				empty.className = "empty-state";
+				empty.textContent = "No se encontraron conversaciones cariñosas con los filtros actuales.";
+				chatCards.appendChild(empty);
+				return;
+			}
+
+			conversaciones.forEach((bloque) => {
+				if (!Array.isArray(bloque) || bloque.length < 2) return;
+				if (!bloque[0]?.mensaje?.trim() || !bloque[1]?.mensaje?.trim()) return;
+
+				const card = document.createElement("article");
+				card.className = "chat-card";
+
+				bloque.forEach((item) => {
+					const row = document.createElement("div");
+					const mine = item.role === "mine";
+					row.className = `msg-row ${mine ? "mine" : "theirs"}`;
+
+					const content = document.createElement("div");
+					content.className = "msg-content";
+
+					const name = document.createElement("span");
+					name.className = "msg-name";
+					name.textContent = mine ? "Javier" : "Victoria";
+
+					const bubble = document.createElement("p");
+					bubble.className = "msg-bubble";
+					bubble.textContent = item.mensaje;
+
+					content.appendChild(name);
+					content.appendChild(bubble);
+					row.appendChild(content);
+					card.appendChild(row);
+				});
+
+				chatCards.appendChild(card);
+			});
+		}
+
+		function actualizarBanderines(momentos) {
+			const base = momentos.length ? momentos.slice(0, 5) : frasesBanderin;
+			bunting.innerHTML = "";
+
+			base.forEach((frase) => {
+				const flag = document.createElement("div");
+				flag.className = "flag";
+				flag.textContent = frase;
+				bunting.appendChild(flag);
+			});
+		}
+
+		async function procesarChatAutomatico() {
+			let texto;
+			try {
+				const res = await fetch(encodeURIComponent(CHAT_FILE));
+				if (!res.ok) {
+					throw new Error("No se pudo leer el chat");
+				}
+				texto = await res.text();
+			} catch {
+				messageBox.textContent = "No pude cargar el chat automáticamente. Ábrelo con Live Server o un servidor local para permitir lectura del archivo 💛";
+				return;
+			}
+
+			const { mios, deElla, timeline } = extraerMensajes(texto, MI_NOMBRE, ELLA_NOMBRE);
+			const momentos = detectarMomentos(mios, deElla);
+			const conversaciones = construirConversacionesCortas(timeline);
+			const conversacionesCarinosas = filtrarConversacionesCarinosas(conversaciones);
+
+			pintarConversaciones(conversacionesCarinosas);
+			actualizarBanderines(momentos);
+
+			messageBox.textContent = `Mostrando ${conversacionesCarinosas.length} conversaciones cariñosas de ${conversaciones.length} bloques analizados.`;
+			messageBox.classList.add("pop");
+			setTimeout(() => messageBox.classList.remove("pop"), 260);
+			estallidoRomantico();
+		}
+
+		loveBtn.addEventListener("click", () => {
+			messageBox.textContent = mensajes[indice % mensajes.length];
+			messageBox.classList.add("pop");
+			estallidoRomantico();
+
+			setTimeout(() => {
+				messageBox.classList.remove("pop");
+			}, 260);
+
+			indice++;
+		});
+
+		pintarConversaciones([]);
+		procesarChatAutomatico();
+
+		lluviaConstante();
+	</script>
+</body>
+</html>
