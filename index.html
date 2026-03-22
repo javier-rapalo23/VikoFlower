@@ -188,6 +188,80 @@
 			margin-inline: auto;
 		}
 
+		.memories {
+			background: rgba(255, 255, 255, 0.72);
+			border: 1px solid rgba(255, 255, 255, 0.7);
+			border-radius: 1.2rem;
+			padding: 1rem;
+			box-shadow: var(--shadow);
+			display: grid;
+			gap: 0.8rem;
+		}
+
+		.memories-title {
+			font-size: clamp(1.1rem, 2.3vw, 1.4rem);
+			color: #7b4f00;
+			text-align: center;
+		}
+
+		.memories-note {
+			font-size: 0.9rem;
+			color: #7a5324;
+			text-align: center;
+		}
+
+		.photo-grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.75rem;
+		}
+
+		.photo-card {
+			background: #fffaf0;
+			border: 1px solid rgba(214, 161, 56, 0.28);
+			border-radius: 0.85rem;
+			padding: 0.45rem;
+			box-shadow: 0 8px 16px rgba(180, 116, 0, 0.12);
+			overflow: hidden;
+			transition: transform 0.28s ease, box-shadow 0.28s ease;
+		}
+
+		.photo-card img {
+			width: 100%;
+			aspect-ratio: 4 / 3;
+			object-fit: cover;
+			border-radius: 0.6rem;
+			display: block;
+			transition: transform 0.35s ease;
+			cursor: zoom-in;
+		}
+
+		.photo-card:focus-visible {
+			outline: 2px solid rgba(216, 152, 0, 0.5);
+			outline-offset: 2px;
+		}
+
+		@media (hover: hover) and (pointer: fine) {
+			.photo-card:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 12px 20px rgba(180, 116, 0, 0.2);
+			}
+
+			.photo-card:hover img {
+				transform: scale(1.06);
+			}
+		}
+
+		@media (hover: none) {
+			.photo-card:active {
+				transform: scale(0.99);
+			}
+
+			.photo-card:active img {
+				transform: scale(1.04);
+			}
+		}
+
 		.story-header {
 			font-size: clamp(1.2rem, 2.5vw, 1.5rem);
 			color: #7b4f00;
@@ -305,6 +379,84 @@
 			font-style: italic;
 		}
 
+		.story-extra {
+			display: grid;
+			grid-template-columns: minmax(240px, 320px) 1fr;
+			gap: 0.8rem;
+			align-items: start;
+			margin-top: 0.7rem;
+		}
+
+		.preview-panel,
+		.context-panel {
+			background: #fffaf0;
+			border: 1px solid rgba(214, 161, 56, 0.28);
+			border-radius: 0.7rem;
+			padding: 0.6rem;
+		}
+
+		.preview-title,
+		.context-title {
+			font-size: 0.9rem;
+			color: #7b4f00;
+			font-weight: 700;
+			margin-bottom: 0.5rem;
+		}
+
+		.preview-list,
+		.context-chat {
+			display: grid;
+			gap: 0.45rem;
+			max-height: 280px;
+			overflow-y: auto;
+		}
+
+		.preview-item {
+			width: 100%;
+			text-align: left;
+			background: #fff;
+			border: 1px solid rgba(214, 161, 56, 0.28);
+			border-radius: 0.55rem;
+			padding: 0.45rem;
+			cursor: pointer;
+			color: #6e4a24;
+			font-size: 0.83rem;
+		}
+
+		.preview-item.active {
+			border-color: #d89800;
+			box-shadow: 0 0 0 2px rgba(216, 152, 0, 0.18);
+		}
+
+		.preview-author {
+			display: block;
+			font-weight: 700;
+			font-size: 0.76rem;
+			margin-bottom: 0.12rem;
+			color: #8c6335;
+		}
+
+		.convos-toggle-wrap {
+			display: grid;
+			justify-items: center;
+			margin-top: 0.8rem;
+		}
+
+		.toggle-convos-btn {
+			border: none;
+			background: linear-gradient(140deg, #f7c644, #d99300);
+			color: #fff;
+			font-size: 0.9rem;
+			font-weight: 700;
+			padding: 0.62rem 1rem;
+			border-radius: 999px;
+			cursor: pointer;
+		}
+
+		.convos-hidden {
+			display: none;
+		}
+
 		.message-box.pop {
 			transform: scale(1.02);
 			box-shadow: 0 8px 18px rgba(167, 109, 0, 0.18);
@@ -411,24 +563,30 @@
 
 		@media (max-width: 640px) {
 			.bunting {
-				gap: 0.45rem;
+				gap: 0.35rem;
+				padding-top: 0.7rem;
 			}
 
 			.flag {
-				font-size: 0.76rem;
-				padding: 0.55rem 0.7rem;
+				font-size: 0.72rem;
+				padding: 0.45rem 0.58rem;
 			}
 
 			main {
-				margin-top: 1rem;
+				margin-top: 0.75rem;
+				padding: 0 0.65rem;
+				gap: 0.75rem;
 			}
 
 			.hero {
 				border-radius: 1.1rem;
+				padding: 1rem 0.8rem;
 			}
 
 			.message-box {
-				font-size: 0.95rem;
+				font-size: 0.88rem;
+				min-height: 52px;
+				padding: 0.7rem 0.75rem;
 			}
 
 			.story-grid {
@@ -436,26 +594,66 @@
 			}
 
 			.story {
-				padding: 0.75rem;
+				padding: 0.62rem;
+			}
+
+			.memories {
+				padding: 0.7rem;
+			}
+
+			.photo-grid {
+				grid-template-columns: 1fr;
+				gap: 0.6rem;
 			}
 
 			.story-section {
-				padding: 0.62rem;
-				min-height: clamp(460px, 74vh, 820px);
+				padding: 0.55rem;
+				min-height: auto;
+			}
+
+			.story-section h3 {
+				font-size: 0.92rem;
+				margin-bottom: 0.5rem;
 			}
 
 			.chat-cards {
-				height: clamp(420px, 68vh, 760px);
-				padding-right: 0.2rem;
+				height: 52vh;
+				min-height: 280px;
+				max-height: 480px;
+				padding: 0.1rem 0.15rem 0.1rem 0.1rem;
 			}
 
 			.msg-bubble {
 				max-width: 100%;
-				font-size: 0.85rem;
+				font-size: 0.82rem;
+				padding: 0.38rem 0.52rem;
+				min-height: 30px;
 			}
 
 			.msg-content {
-				max-width: 94%;
+				max-width: 96%;
+			}
+
+			.story-extra {
+				grid-template-columns: 1fr;
+				gap: 0.6rem;
+			}
+
+			.preview-list,
+			.context-chat {
+				max-height: 180px;
+			}
+
+			.preview-panel,
+			.context-panel {
+				padding: 0.5rem;
+			}
+
+			.toggle-convos-btn {
+				width: 100%;
+				max-width: 320px;
+				font-size: 0.85rem;
+				padding: 0.56rem 0.85rem;
 			}
 		}
 	</style>
@@ -477,8 +675,9 @@
 		<section class="hero">
 			<h1>Flores Amarillas para Ti</h1>
 			<p class="subtitle">
-				Un rincón suave y lleno de cariño para recordarte que en cada pétalo,
-				late una razón más para sonreír a tu lado.
+				Me hubiese gustado estar a tu lado este día, pero te hice esto para
+				recordarte lo especial que eres para mí. Espero que pronto pueda
+				renacer lo nuestro.
 			</p>
 
 			<div class="flower-row" aria-hidden="true">
@@ -500,12 +699,39 @@
 			<button class="love-btn" id="loveBtn" type="button">Mostrar sorpresa</button>
 		</section>
 
+		<section class="memories" aria-label="Galería de recuerdos">
+			<h2 class="memories-title">Nuestros recuerdos</h2>
+			<div class="photo-grid">
+				<figure class="photo-card" tabindex="0"><img src="fotos/recuerdo-1.jpg" alt="Recuerdo 1"></figure>
+				<figure class="photo-card" tabindex="0"><img src="fotos/recuerdo-2.jpg" alt="Recuerdo 2"></figure>
+				<figure class="photo-card" tabindex="0"><img src="fotos/recuerdo-3.jpg" alt="Recuerdo 3"></figure>
+				<figure class="photo-card" tabindex="0"><img src="fotos/recuerdo-4.jpg" alt="Recuerdo 4"></figure>
+			</div>
+		</section>
+
 		<section class="story" id="storySection">
 			<h2 class="story-header">Nuestra historia</h2>
 			<div class="story-grid">
 				<article class="story-section">
-					<h3>Conversaciones cortas (estilo WhatsApp)</h3>
-					<div class="chat-cards" id="chatCards"></div>
+					<div class="story-extra">
+						<section class="preview-panel">
+							<h4 class="preview-title">Todos los Te Amo</h4>
+							<div class="preview-list" id="teAmoPreviewList"></div>
+						</section>
+						<section class="context-panel">
+							<h4 class="context-title">Contexto de conversación</h4>
+							<div class="context-chat" id="teAmoContext"></div>
+						</section>
+					</div>
+
+					<div class="convos-toggle-wrap">
+						<button type="button" class="toggle-convos-btn" id="toggleConvosBtn">Mostrar conversaciones cortas</button>
+					</div>
+
+					<section id="convosSection" class="convos-hidden">
+						<h3>Conversaciones de WhatsApp</h3>
+						<div class="chat-cards" id="chatCards"></div>
+					</section>
 				</article>
 			</div>
 		</section>
@@ -513,17 +739,23 @@
 
 	<script>
 		const mensajes = [
-			"Tu sonrisa ilumina hasta los días nublados.",
-			"Eres mi casualidad favorita y mi destino más bonito.",
-			"Si te pienso, florece todo alrededor.",
-			"Contigo, cualquier lugar se siente hogar.",
-			"Gracias por existir y hacerme creer en lo hermoso."
+			"Te amo 🥺❤️",
+			"Me encantas en tantos sentidos❤️",
+			"Me encantan tus ojos",
+			"Solo quiero hablar con vos",
+			"Sos lo más bello que me pasó en la vida",
+            "Gracias por cada momento juntos❤️",  
+            "No hay nadie como vos"
 		];
 
 		const messageBox = document.getElementById("messageBox");
 		const loveBtn = document.getElementById("loveBtn");
 		const fallLayer = document.getElementById("fallLayer");
 		const chatCards = document.getElementById("chatCards");
+		const teAmoPreviewList = document.getElementById("teAmoPreviewList");
+		const teAmoContext = document.getElementById("teAmoContext");
+		const toggleConvosBtn = document.getElementById("toggleConvosBtn");
+		const convosSection = document.getElementById("convosSection");
 		const bunting = document.querySelector(".bunting");
 		const CHAT_FILE = "Chat de WhatsApp con Victoria Ramirez.txt";
 		const MI_NOMBRE = "Javier Orellana";
@@ -532,11 +764,13 @@
 		const FECHA_FIN = new Date(2026, 0, 28, 23, 59, 59, 999);
 		let indice = 0;
 		const frasesBanderin = [
-			"Eres mi luz ✨",
-			"Te elijo siempre 💛",
-			"Mi lugar favorito: contigo 🌼",
-			"Amor bonito 🌙",
-			"Cada día más tú y yo 💌"
+			"Te amo 🥺❤️",
+			"Me encantas en tantos sentidos❤️",
+			"Me encantan tus ojos",
+			"Solo quiero hablar con vo💕",
+			"Sos lo más bello que me pasó en la vida",
+            "Gracias por cada momento juntos❤️",  
+            "No hay nadie como vos"
 		];
 
 		function crearFlorCayendo(extraBrillo = false) {
@@ -580,6 +814,21 @@
 			return true;
 		}
 
+		function limpiarComparacion(texto) {
+			return texto
+				.normalize("NFD")
+				.replace(/[\u0300-\u036f]/g, "")
+				.toLowerCase()
+				.replace(/[¡!¿?.,;:]+/g, "")
+				.replace(/\s+/g, " ")
+				.trim();
+		}
+
+		function esSaludoGenerico(texto) {
+			const t = limpiarComparacion(texto);
+			return /^(hola|holi|holis|buenos dias|buen dia|buenas tardes|buenas noches|buenas|descansa|descansa igualmente|bye|adios|ok|oki|oks)$/.test(t);
+		}
+
 		function normalizarAutor(autor) {
 			return autor
 				.replace(/‎/g, "")
@@ -611,7 +860,7 @@
 			const miNombreNorm = normalizarAutor(miNombre);
 			const ellaNombreNorm = normalizarAutor(nombreElla);
 
-			lineas.forEach((linea) => {
+			lineas.forEach((linea, sourceIndex) => {
 				const limpia = linea.trim();
 				if (!limpia.includes(" - ")) return;
 				const fecha = extraerFecha(limpia);
@@ -632,10 +881,10 @@
 
 				if (autor === miNombreNorm) {
 					mios.push(mensaje);
-					timeline.push({ autor: miNombre, role: "mine", mensaje, fecha });
+					timeline.push({ autor: miNombre, role: "mine", mensaje, fecha, sourceIndex });
 				} else if (autor === ellaNombreNorm) {
 					deElla.push(mensaje);
-					timeline.push({ autor: nombreElla, role: "theirs", mensaje, fecha });
+					timeline.push({ autor: nombreElla, role: "theirs", mensaje, fecha, sourceIndex });
 				}
 			});
 
@@ -666,25 +915,28 @@
 		}
 
 		function construirConversacionesCortas(timeline) {
+			const timelineVisible = timeline.filter((item) => !esSaludoGenerico(item.mensaje));
 			const conversaciones = [];
-			for (let i = 0; i < timeline.length; i++) {
-				const actual = timeline[i];
-				if (actual.role !== "mine" && actual.role !== "theirs") continue;
-				const rolOpuesto = actual.role === "mine" ? "theirs" : "mine";
+			let i = 0;
+			while (i < timelineVisible.length) {
+				const bloque = [timelineVisible[i]];
+				let j = i + 1;
 
-				let respuesta = null;
-				for (let j = i + 1; j < Math.min(i + 8, timeline.length); j++) {
-					if (timeline[j].role === rolOpuesto) {
-						respuesta = timeline[j];
-						i = j;
-						break;
-					}
+				while (j < timelineVisible.length && bloque.length < 8) {
+					const previo = timelineVisible[j - 1];
+					const actual = timelineVisible[j];
+					const mismoDia = previo.fecha?.toDateString() === actual.fecha?.toDateString();
+					const cercano = (actual.sourceIndex - previo.sourceIndex) <= 3;
+
+					if (!mismoDia || !cercano) break;
+					bloque.push(actual);
+					j++;
 				}
 
-				if (respuesta) {
-					conversaciones.push([actual, respuesta]);
-				}
+				conversaciones.push(bloque);
+				i = j;
 			}
+
 			return conversaciones;
 		}
 
@@ -695,12 +947,17 @@
 			return tieneEmoji || tienePalabras;
 		}
 
+		function contieneTeAmo(texto) {
+			const limpio = limpiarComparacion(texto);
+			return /\bte\s*amo\b|\bt\s*amo\b/.test(limpio);
+		}
+
 		function filtrarConversacionesCarinosas(conversaciones) {
 			return conversaciones.filter((bloque) => {
-				const javier = bloque.find((item) => item.role === "mine");
-				const victoria = bloque.find((item) => item.role === "theirs");
-				if (!javier || !victoria) return false;
-				return esMensajeCarinoso(javier.mensaje) || esMensajeCarinoso(victoria.mensaje);
+				if (!Array.isArray(bloque) || bloque.length < 2) return false;
+				const roles = new Set(bloque.map((item) => item.role));
+				if (!roles.has("mine") || !roles.has("theirs")) return false;
+				return bloque.some((item) => esMensajeCarinoso(item.mensaje));
 			});
 		}
 
@@ -716,7 +973,7 @@
 
 			conversaciones.forEach((bloque) => {
 				if (!Array.isArray(bloque) || bloque.length < 2) return;
-				if (!bloque[0]?.mensaje?.trim() || !bloque[1]?.mensaje?.trim()) return;
+				if (!bloque.every((item) => item?.mensaje?.trim())) return;
 
 				const card = document.createElement("article");
 				card.className = "chat-card";
@@ -744,6 +1001,89 @@
 				});
 
 				chatCards.appendChild(card);
+			});
+		}
+
+		function crearMiniMensaje(item, destacado = false) {
+			const row = document.createElement("div");
+			const mine = item.role === "mine";
+			row.className = `msg-row ${mine ? "mine" : "theirs"}`;
+
+			const content = document.createElement("div");
+			content.className = "msg-content";
+
+			const name = document.createElement("span");
+			name.className = "msg-name";
+			name.textContent = mine ? "Javier" : "Victoria";
+
+			const bubble = document.createElement("p");
+			bubble.className = "msg-bubble";
+			bubble.textContent = item.mensaje;
+			if (destacado) {
+				bubble.style.outline = "2px solid rgba(216, 152, 0, 0.5)";
+				bubble.style.outlineOffset = "1px";
+			}
+
+			content.appendChild(name);
+			content.appendChild(bubble);
+			row.appendChild(content);
+			return row;
+		}
+
+		function pintarContextoTeAmo(timeline, indexObjetivo) {
+			teAmoContext.innerHTML = "";
+			if (indexObjetivo < 0 || indexObjetivo >= timeline.length) return;
+
+			const start = Math.max(0, indexObjetivo - 2);
+			const end = Math.min(timeline.length - 1, indexObjetivo + 2);
+
+			for (let i = start; i <= end; i++) {
+				teAmoContext.appendChild(crearMiniMensaje(timeline[i], i === indexObjetivo));
+			}
+		}
+
+		function pintarPreviewTeAmo(timeline) {
+			teAmoPreviewList.innerHTML = "";
+			teAmoContext.innerHTML = "";
+			const coincidencias = [];
+
+			timeline.forEach((item, index) => {
+				if (contieneTeAmo(item.mensaje)) {
+					coincidencias.push({ item, index });
+				}
+			});
+
+			if (!coincidencias.length) {
+				const empty = document.createElement("div");
+				empty.className = "empty-state";
+				empty.textContent = "No encontré mensajes con “te amo” en el rango de fechas.";
+				teAmoPreviewList.appendChild(empty);
+
+				const ctx = document.createElement("div");
+				ctx.className = "empty-state";
+				ctx.textContent = "Selecciona una coincidencia para ver el contexto.";
+				teAmoContext.appendChild(ctx);
+				return;
+			}
+
+			const placeholder = document.createElement("div");
+			placeholder.className = "empty-state";
+			placeholder.textContent = "Selecciona una coincidencia para ver el contexto.";
+			teAmoContext.appendChild(placeholder);
+
+			coincidencias.forEach(({ item, index }) => {
+				const btn = document.createElement("button");
+				btn.type = "button";
+				btn.className = "preview-item";
+				btn.innerHTML = `<span class="preview-author">${item.role === "mine" ? "Javier" : "Victoria"}</span>${item.mensaje}`;
+
+				btn.addEventListener("click", () => {
+					[...teAmoPreviewList.querySelectorAll(".preview-item")].forEach((el) => el.classList.remove("active"));
+					btn.classList.add("active");
+					pintarContextoTeAmo(timeline, index);
+				});
+
+				teAmoPreviewList.appendChild(btn);
 			});
 		}
 
@@ -778,6 +1118,7 @@
 			const conversacionesCarinosas = filtrarConversacionesCarinosas(conversaciones);
 
 			pintarConversaciones(conversacionesCarinosas);
+			pintarPreviewTeAmo(timeline);
 			actualizarBanderines(momentos);
 
 			messageBox.textContent = `Mostrando ${conversacionesCarinosas.length} conversaciones cariñosas de ${conversaciones.length} bloques analizados.`;
@@ -796,6 +1137,11 @@
 			}, 260);
 
 			indice++;
+		});
+
+		toggleConvosBtn.addEventListener("click", () => {
+			const hidden = convosSection.classList.toggle("convos-hidden");
+			toggleConvosBtn.textContent = hidden ? "Mostrar conversaciones cortas" : "Ocultar conversaciones cortas";
 		});
 
 		pintarConversaciones([]);
